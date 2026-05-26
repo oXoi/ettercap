@@ -150,9 +150,10 @@ static size_t create_data_segment(u_char** data, struct filter_header *fh, struc
 static size_t add_data_segment(u_char **data, size_t base, u_char **string, size_t slen)
 {
    /* make room for the new string */
-   SAFE_RECALLOC(*data, base + slen + 1);
+   SAFE_REALLOC(*data, base + slen + 1);
 
    /* copy the string, NULL separated */
+   memset(*data + base, 0, slen + 1);
    memcpy(*data + base, *string, slen);
 
    /* 
